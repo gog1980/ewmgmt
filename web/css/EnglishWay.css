@@ -1,0 +1,12 @@
+.sidebar-menu>li.headerEW > i {
+	width: 20px;
+}
+
+.sidebar-menu>li.headerEW {
+	color: #fff !important;
+	font-size: 14px;
+}
+
+.error-page>.error-content {
+    padding-top: 18px;
+}
