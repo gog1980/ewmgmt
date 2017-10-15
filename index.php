@@ -14,6 +14,7 @@ and open the template in the editor.
         <?php
         echo "Hola desde PHP";
         echo "Modificación pos Git";
+        echo "2a modificación";
         ?>
     </body>
 </html>
