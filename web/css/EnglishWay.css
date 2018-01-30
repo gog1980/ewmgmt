@@ -1,12 +1,76 @@
 .sidebar-menu>li.headerEW > i {
-	width: 20px;
+    width: 20px;
 }
 
 .sidebar-menu>li.headerEW {
-	color: #fff !important;
-	font-size: 14px;
+    color: #fff !important;
+    font-size: 14px;
 }
 
 .error-page>.error-content {
     padding-top: 18px;
 }
+
+tbody > tr.selected{
+    background-color: #f4f4f4;
+}
+
+tbody > tr.selected > td:first-child {
+    border-left: 3px solid #3c8dbc;
+    padding-left: 5px; /*se establece a 5px para contrarrestar los 3px del borde, puesto que por bootstrap está en padding 8px*/
+}
+
+.dt-button > span > i.fa {
+    font-size: 20px;
+}
+
+.dt-button{
+    min-height: 36px;
+    min-width: 47px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.box-header.tech-info{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.box-tools.tech-info{
+    top: 0px;
+}
+
+.form-group > .row{
+    margin-bottom: 5px;
+}
+
+/* only for readonly fields, background color will be fff */
+.form-control[readonly] { 
+    background-color: #fff;
+}
+
+/*make buttons full width on small screens*/
+.btn-lockwidth{
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .noPaddingRight {
+        padding-right: 0px;
+    }
+
+    .padLeft5 {
+        padding-left: 5px;
+    }
+    
+    .btn-block {
+        width:100%;
+    }
+    
+    /*make buttons 110 width on medium screens*/
+    .btn-lockwidth{
+        width: 110px;
+    }
+    
+}
+

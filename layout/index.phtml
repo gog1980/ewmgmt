@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<!--
+<?php
+/*
 Copyright 2017 Oscar.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,13 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
+*/
+
+namespace LAMgmt;
+
+use \LAMgmt\Util\Utils;
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
  
@@ -34,6 +40,7 @@ limitations under the License.
         <link href="css/skins/skin-blue.min.css" rel="stylesheet" type="text/css" />
         <!-- Custom Style -->
         <link href="css/EnglishWay.css" rel="stylesheet" type="text/css" />
+        <?php echo Utils::getCurrentPageStyle(); ?>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -125,6 +132,8 @@ limitations under the License.
         <script src='plugins/fastclick/fastclick.min.js'></script>
         <!-- AdminLTE App -->
         <script src="js/app.min.js" type="text/javascript"></script>
+        <!-- Page Scripts -->
+        <?php echo Utils::getCurrentPageScripts(); ?>
 
     </body>
 </html>

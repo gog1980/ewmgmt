@@ -1,0 +1,4 @@
+Buttons 1.4.2
+DataTables 1.10.16
+JSZip 2.5.0
+pdfmake 0.1.32

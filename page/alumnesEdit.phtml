@@ -1,0 +1,85 @@
+<?php
+/*
+ * Copyright 2017 Oscar.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+?>
+<!-- Right side column. Contains the navbar and content of the page -->
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <?php echo ($edit ? "Editar " : "Nou ") ?> alumne
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-users"></i> Inici</a></li>
+            <li><a href="#">Alumnes</a></li>
+            <li class="active"><?php echo ($edit ? "Editar " : "Nou ") ?> alumne</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="#" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Default box -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Dades personals</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <?php echo \LAMgmt\Util\Utils::getPersonalDataForm("alumne",$alumneValues); ?>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col-md-6 -->
+                <div class="col-md-6">
+                    <!-- Default box -->
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Contactes</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <label>Relació amb l'alumne</label>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 noPaddingRight">
+                                        <select class="form-control" name="relacio" id="relacio">
+                                            <option value="P">Pare</option>
+                                            <option value="M">Mare</option>
+                                            <option value="G">Germà</option>
+                                            <option value="I">Avi</option>
+                                            <option value="A">Àvia</option>
+                                            <option value="L">Altres</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 padLeft5">
+                                        <input id="relacio_altres" name="relacio_altres" type="text" class="form-control" placeholder="Altre relació" disabled>
+                                    </div>
+                                </div>
+                            </div>                    
+                            <?php echo \LAMgmt\Util\Utils::getPersonalDataForm("contacte",null); ?>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col-md-6 -->            
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" name="guardar" value="Guardar" class="btn btn-primary btn-lockwidth center-block" />
+                </div>
+            </div>
+        </form>
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->

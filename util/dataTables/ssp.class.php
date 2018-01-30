@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright 2017 Oscar.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
+namespace LAMgmt\Util\DataTables;
 
-namespace LAMgmt\Util\DataTables\SSP;
+use LAMgmt\Config\Config;
+use PDO;
 
 /** Helper functions for building a DataTables server-side processing SQL query.
  * Based on DataTables ssp class.
@@ -65,12 +67,8 @@ final class SSP {
      *     * pass - user password
      *  @return resource PDO connection
      */
-    static function db($conn) {
-        if (is_array($conn)) {
-            return self::sql_connect($conn);
-        }
-
-        return $conn;
+    static function db() {
+        return self::sql_connect();
     }
 
     /**
@@ -217,9 +215,9 @@ final class SSP {
      *  @param  array $columns Column information array
      *  @return array          Server-side processing response array
      */
-    static function simple($request, $conn, $table, $primaryKey, $columns) {
+    static function simple($request, $table, $primaryKey, $columns) {
         $bindings = array();
-        $db = self::db($conn);
+        $db = self::db();
 
         // Build the SQL query string from the request
         $limit = self::limit($request, $columns);
@@ -283,9 +281,9 @@ final class SSP {
      *  @param  string $whereAll WHERE condition to apply to all queries
      *  @return array          Server-side processing response array
      */
-    static function complex($request, $conn, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
+    static function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
         $bindings = array();
-        $db = self::db($conn);
+        $db = self::db();
         $localWhereResult = array();
         $localWhereAll = array();
         $whereAllSql = '';
@@ -358,10 +356,11 @@ final class SSP {
      *     * pass - user password
      * @return resource Database connection handle
      */
-    static function sql_connect($sql_details) {
+    static function sql_connect() {
+        $config = Config::getConfig('db');
         try {
-            $db = @new PDO(
-                    "mysql:host={$sql_details['host']};dbname={$sql_details['db']}", $sql_details['user'], $sql_details['pass'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+            $db = new PDO(
+                    "mysql:host={$config['host']};dbname={$config['dbname']};charset=utf8mb4", $config['user'], $config['password'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
             );
         } catch (PDOException $e) {
             self::fatal(

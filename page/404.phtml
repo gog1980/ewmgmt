@@ -38,6 +38,29 @@ use \LAMgmt\Util\Utils;
                                 No podem trobar la pàgina que busques.
                                 Selecciona una altra opció del menú o torna al <a href="<?php echo Utils::createLink("home"); ?> ">inici</a>.
                             </p>
+                            <?php
+                                if (isset($extra))
+                                {
+                            ?>
+                                <div class="box box-warning collapsed-box">
+                                  <div class="box-header with-border tech-info">
+                                    <!-- <h3 class="box-title">Informació tècnica</h3> -->
+                                    Informació tècnica
+                                    <div class="box-tools pull-right tech-info">
+                                      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                    </div><!-- /.box-tools -->
+                                  </div><!-- /.box-header -->
+                                  <div class="box-body">
+                                    <?php 
+                                        $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                                        echo "URL: $actual_link<br/>";
+                                        echo "Missatge: ".$extra['message'];
+                                    ?>
+                                  </div><!-- /.box-body -->
+                                </div>
+                            <?php
+                                }
+                            ?>
                         </div><!-- /.error-content -->
                     </div><!-- /.error-page -->
                 </section><!-- /.content -->

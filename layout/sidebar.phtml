@@ -50,6 +50,7 @@ use \LAMgmt\Util\Utils;
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header headerEW"><i class="fa fa-users"></i>ALUMNES</li>
+                <?php echo Utils::getMenuItem("Nou alumne", "alumnesEdit", "fa-plus"); ?>
                 <?php echo Utils::getMenuItem("Manteniment", "alumnes", "fa-edit"); ?>
             <li class="header headerEW"><i class="fa fa-briefcase"></i>CURSOS</li>
                 <?php echo Utils::getMenuItem("Manteniment", "cursos", "fa-edit"); ?>
