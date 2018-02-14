@@ -18,6 +18,7 @@ limitations under the License.
 namespace LAMgmt;
 
 use \LAMgmt\Exception\NotFoundException;
+use \LAMgmt\Alert\Alert;
 
 $GLOBALS['currPage'] = "";
 
@@ -45,7 +46,8 @@ final class Index {
         'LAMgmt\Mapping\AlumneMapper' => '/../mapping/AlumneMapper.php',
         'LAMgmt\Model\Alumne' => '/../model/Alumne.php',
         'LAMgmt\Util\UtilsAlumne' => '/../util/UtilsAlumne.php',
-        'LAMgmt\Dao\AlumneSearchCriteria' => '/../dao/AlumneSearchCriteria.php',        
+        'LAMgmt\Dao\AlumneSearchCriteria' => '/../dao/AlumneSearchCriteria.php',
+        'LAMgmt\Alert\Alert' => '/../alert/Alert.php',
         /*'TodoList\Validation\TodoValidator' => '/../validation/TodoValidator.php',
         'TodoList\Validation\ValidationError' => '/../validation/ValidationError.php',
         */
@@ -136,6 +138,10 @@ final class Index {
             $run = true;
             // data for main template
             $template = $this->getTemplate($page);
+            $alerts = null;
+            if (Alert::hasAlerts()) {
+                $alerts = Alert::getAlerts();
+            }            
             // main template (layout)
             require self::LAYOUT_DIR . 'index.phtml';
         }

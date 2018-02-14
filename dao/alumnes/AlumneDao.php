@@ -193,8 +193,8 @@ final class AlumneDao{
         if (!$alumne->getId()) {
             return $this->findById($this->getDb()->lastInsertId());
         }
-        if (!$statement->rowCount()) {
-            throw new NotFoundException('No existeix alumne amb ID "' . $alumne->getId() . '".');
+        if ($statement->errorCode() != 0) {
+            throw new Exception("Error al grabar l'alumne: ".$statement->errorInfo()) ;
         }
         return $alumne;
     }

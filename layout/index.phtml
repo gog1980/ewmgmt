@@ -112,6 +112,42 @@ use \LAMgmt\Util\Utils;
 
             <?php require 'sidebar.phtml'; ?>    
             
+            <?php if ($alerts): ?>
+            <div class="modal fade" id="overlay-alert">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Editar alumne</h4>
+                  </div>
+                  <div class="modal-body alert">
+                    <?php foreach ($alerts as $alert): ?>
+                        <p>
+                            <?php 
+                                switch($alert['type']){
+                                    case 0:
+                                        echo '<i class="fa fa-fw fa-times-circle alert-error-icon"></i>';
+                                        break;                                    
+                                    case 1:
+                                        echo '<i class="fa fa-fw fa-check-circle alert-ok-icon"></i>';
+                                        break;
+                                    case 2:
+                                        echo '<i class="fa fa-fw fa-exclamation-circle alert-warning-icon"></i>';
+                                        break;                                         
+                                }
+                            ?>
+                        </p>
+                        <p style="font-size: 21px;"><?php echo $alert['message']; ?></p>
+                    <?php endforeach; ?> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tancar</button>
+                  </div>        
+                </div>
+              </div>
+            </div>
+            <?php endif; ?>            
+            
             <?php require $template; ?>
 
             <footer class="main-footer">

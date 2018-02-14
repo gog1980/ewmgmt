@@ -23,6 +23,7 @@ use \LAMgmt\Mapping\AlumneMapper;
 use \LAMgmt\Model\Alumne;
 use \LAMgmt\Util\UtilsAlumne;
 use \LAMgmt\Util\Utils;
+use \LAMgmt\Alert\Alert;
 //use \TodoList\Validation\TodoValidator;
 
 $errors = [];
@@ -55,7 +56,7 @@ if (array_key_exists('guardar', $_POST)) {
         // save
         $dao = new AlumneDao();
         $alumne = $dao->save($alumne);
-        //Flash::addFlash('TODO saved successfully.');
+        Alert::addAlert(1,'Alumne guardat correctament.');
         // redirect
         if (isset($alumne)){
             Utils::redirect('alumnesEdit', ['id' => $alumne->getId()]);

@@ -47,13 +47,25 @@ final class Utils {
      * @param string $targetPage target page
      * @param string $icon item icon
      */
-    public static function getMenuItem($label, $targetPage, $icon) {
+    public static function getMenuItem($label, $targetPage, $icon, $id = "") {
         $ret = "<li";
-        if ($GLOBALS['currPage'] === $targetPage) {
+        if (($GLOBALS['currPage'] === $targetPage) && (self::isURLOk($targetPage))) {
             $ret .= " class='active'";
         }
+        ($id == "") ? $ret .= " id='m-".$targetPage."'" : $ret .= " id='m-".$id."'";
         $ret .= "><a href='" . self::createLink($targetPage) . "'><i class='fa $icon'></i> $label</a></li>";
         return $ret;
+    }
+    
+    public static function isURLOk($targetPage){
+        switch ($targetPage) {
+            case "alumnesEdit":
+                return (!(array_key_exists('id', $_GET)));
+                break;
+            default:
+                return true;
+                break;
+        }
     }
 
     /**
@@ -138,16 +150,17 @@ final class Utils {
     }
 
     public static function getCurrentPageScripts() {
-        $ret = "";
+        $ret = "<script src=\"js/lamgmt.js\" type=\"text/javascript\"></script>";
         switch ($GLOBALS['currPage']) {
             case "alumnes":
-                $ret = self::getDataTableScripts();
+                $ret .= self::getDataTableScripts();
                 $ret .= "<script src=\"js/bsModal.js\" type=\"text/javascript\"></script>";
                 $ret .= "<script src=\"js/pages/alumnes.js\" type=\"text/javascript\"></script>";
                 break;
             case "alumnesEdit":
-                $ret = "<script src=\"plugins/input-mask/jquery.inputmask.js\" type=\"text/javascript\"></script>\n";
+                $ret .= "<script src=\"plugins/input-mask/jquery.inputmask.js\" type=\"text/javascript\"></script>\n";
                 $ret .= "<script src=\"plugins/input-mask/jquery.inputmask.date.extensions.js\" type=\"text/javascript\"></script>\n";
+                $ret .= "<script src=\"js/bsModal.js\" type=\"text/javascript\"></script>";
                 $ret .= "<script src=\"js/pages/alumnesEdit.js\" type=\"text/javascript\"></script>";
                 break;
             default:
@@ -189,7 +202,7 @@ final class Utils {
         $destArray['esborrat'] = (array_key_exists('esborrat', $srcArray)) ? $srcArray['esborrat'] : 0;
     }
     
-    public static function getPersonalDataForm($arrayName, $srcData) {
+    public static function getPersonalDataForm($arrayName, $srcData, $studentFields = true) {
         $data = [];
         if (isset($srcData)){
             self::preparePersonalDataArray($srcData, $data);
@@ -230,25 +243,17 @@ final class Utils {
         $ret .= '                            <div class="col-md-3 noPaddingRight padLeft5">';
         $ret .= '                                <label>Data naixement</label>';
         $ret .= '                                <div class="form-group">';
-        $ret .= '                                    <div class="input-group">';
-        $ret .= '                                        <div class="input-group-addon">';
-        $ret .= '                                            <i class="fa fa-calendar"></i>';
-        $ret .= '                                        </div>';
-        $ret .= '                                        <input name="'.$arrayName.'[data_naixement]" type="text" class="form-control"  value="'.$data['data_naixement'].'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask/>';
-        $ret .= '                                    </div>';
+        $ret .= '                                    <input name="'.$arrayName.'[data_naixement]" type="text" class="form-control"  value="'.$data['data_naixement'].'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask/>';
         $ret .= '                                </div>';
         $ret .= '                            </div>';
-        $ret .= '                            <div class="col-md-3 padLeft5">';
-        $ret .= '                                <label>Data ingrés</label>';
-        $ret .= '                                <div class="form-group">';
-        $ret .= '                                    <div class="input-group">';
-        $ret .= '                                        <div class="input-group-addon">';
-        $ret .= '                                            <i class="fa fa-calendar"></i>';
-        $ret .= '                                        </div>';
-        $ret .= '                                        <input name="'.$arrayName.'[data_ingres]" type="text" class="form-control"  value="'.$data['data_ingres'].'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask/>';
-        $ret .= '                                    </div>';
-        $ret .= '                                </div>';
-        $ret .= '                            </div>';        
+        if ($studentFields) {
+            $ret .= '                            <div class="col-md-3 padLeft5">';
+            $ret .= '                                <label>Data alta</label>';
+            $ret .= '                                <div class="form-group">';
+            $ret .= '                                    <input name="'.$arrayName.'[data_ingres]" type="text" class="form-control"  value="'.$data['data_ingres'].'" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask/>';
+            $ret .= '                                </div>';
+            $ret .= '                            </div>';        
+        }
         $ret .= '                        </div>';
         $ret .= '                        <label>Adreça</label>';
         $ret .= '                        <div class="form-group">';
@@ -262,7 +267,7 @@ final class Utils {
         $ret .= '                                    <input name="'.$arrayName.'[codi_postal]" type="text" class="form-control" placeholder="C. P." size="5"  value="'.$data['codi_postal'].'">';
         $ret .= '                                </div>';
         $ret .= '                                <div class="col-md-5 noPaddingRight padLeft5">';
-        $ret .= '                                    <input name="'.$arrayName.'[poblacio]" type="text" class="form-control" placeholder="Poblacio" value="'.$data['poblacio'].'">';
+        $ret .= '                                    <input name="'.$arrayName.'[poblacio]" type="text" class="form-control" placeholder="Població" value="'.$data['poblacio'].'">';
         $ret .= '                                </div>';
         $ret .= '                                <div class="col-md-5 padLeft5">';
         $ret .= '                                    <input name="'.$arrayName.'[provincia]" type="text" class="form-control" placeholder="Provincia" value="'.$data['provincia'].'">';
@@ -301,5 +306,9 @@ final class Utils {
         $ret .= '                            </div>';
         $ret .= '                        </div>';
         return $ret;
-    }   
+    }
+    
+    public static function getModal(){
+        //
+    }
 }

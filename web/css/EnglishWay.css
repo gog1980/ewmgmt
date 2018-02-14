@@ -54,6 +54,31 @@ tbody > tr.selected > td:first-child {
     width: 100%;
 }
 
+/*make sure FontAwesome icons are always same width in input fields*/
+.input-group-addon > .fa {
+    min-width: 14px;
+}
+
+.modal-body.alert {
+    text-align: center;
+}
+
+/*Set size and color of alert icons*/
+.alert-ok-icon{
+    font-size: 3em;
+    color: #00a65a;
+}
+
+.alert-error-icon{
+    font-size: 3em;
+    color: #dd4b39;
+}
+
+.alert-warning-icon{
+    font-size: 3em;
+    color: #f39c12;
+}
+
 @media (min-width: 992px) {
     .noPaddingRight {
         padding-right: 0px;

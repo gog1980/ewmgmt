@@ -1,5 +1,5 @@
 /* 
- * Copyright 2017 Oscar.
+ * Copyright 2018 o_gil.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,8 @@
  */
 
 $(document).ready(function () {
-    $("[data-mask]").inputmask();    
-});
-
-$( "#relacio" ).change(function() {
-    $("#relacio_altres").prop('disabled', ($(this).val() != "L"));
+    if ($('#overlay-alert').length > 0){
+        $('#overlay-alert').modal('show');
+        setTimeout(function() {$('#overlay-alert').modal('hide');}, 3000);    
+    }
 });

@@ -24,7 +24,8 @@ function showModal(options){
         size : false,
         onShow : false,
         onHide : false,
-        actions : false
+        actions : false,
+        autoHide : 0 
     }, options);
     
     self.onShow = typeof options.onShow == 'function' ? options.onShow : function () {};
@@ -62,4 +63,7 @@ function showModal(options){
     }    
 
     self.$modal.modal({backdrop: 'static'});
+    if (options.autoHide > 0) {
+        setTimeout(function() {$('.modal').modal('hide');}, options.autoHide);
+    }
 }
