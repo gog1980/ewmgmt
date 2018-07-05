@@ -308,6 +308,51 @@ final class Utils {
         return $ret;
     }
     
+    public static function getContacteTabsIfNecessary($contactesAlumneValues) {
+        $ret = "";
+        $first = true;
+        $relacio = "";
+        if (isset($contactesAlumneValues)) {
+            if (count($contactesAlumneValues > 1)) {
+                $ret = '<ul class="nav nav-tabs nav-justified">';
+                foreach ($contactesAlumneValues as $contacte) {
+                    if ($first == true) {
+                        $ret .= '<li class="active">';
+                        $first = false;
+                    } else {
+                        $ret .= '<li>';
+                    }
+                    switch (trim($contacte['relacio'])) {
+                        case "P":
+                            $relacio = "Pare";
+                            break;
+                        case "M":
+                            $relacio = "Mare";
+                            break;
+                        case "G":
+                            $relacio = "Germà";
+                            break;
+                        case "I":
+                            $relacio = "Avi";
+                            break;
+                        case "A":
+                            $relacio = "Àvia";
+                            break;
+                        case "L":
+                            $relacio = $contacte['relacio_altres'];
+                            break;
+                        default:
+                            $relacio = "Altres";
+                            break;
+                    }
+                    $ret .= '<a data-toggle="tab" href="#cte' . $contacte['id'] . '">' . $relacio . '</a></li>';
+                }
+                $ret .= "</ul>";
+            }
+        }
+        return $ret;
+    }
+    
     public static function getModal(){
         //
     }

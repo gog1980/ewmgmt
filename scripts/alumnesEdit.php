@@ -21,6 +21,11 @@ use \DateTime;
 use \LAMgmt\Dao\AlumneDao;
 use \LAMgmt\Mapping\AlumneMapper;
 use \LAMgmt\Model\Alumne;
+use \LAMgmt\Dao\ContacteDao;
+use \LAMgmt\Mapping\ContacteMapper;
+use \LAMgmt\Model\Contacte;
+use \LAMgmt\Dao\AlumneContacteDao;
+use \LAMgmt\Model\AlumneContacte;
 use \LAMgmt\Util\UtilsAlumne;
 use \LAMgmt\Util\Utils;
 use \LAMgmt\Alert\Alert;
@@ -28,11 +33,20 @@ use \LAMgmt\Alert\Alert;
 
 $errors = [];
 $alumne = null;
+$contacte = null;
+$contactesAlumne = null;
 $alumneValues = [];
+$contactesAlumneValues = [];
+$contacteArray = [];
 $edit = array_key_exists('id', $_GET);
 if ($edit) {
     $alumne = UtilsAlumne::getAlumneByGetId();
     AlumneMapper::mapToArray($alumneValues, $alumne);
+    $contactesAlumne = UtilsAlumne::getContactesAlumneByGetId();
+    foreach ($contactesAlumne as $item) {
+        ContacteMapper::mapToArray($contacteArray, $item);
+        array_push($contactesAlumneValues,$contacteArray);
+    }
 } else {
     // set defaults
     $alumne = new Alumne();
@@ -49,14 +63,34 @@ if (array_key_exists('guardar', $_POST)) {
     ];*/
     // map
     AlumneMapper::map($alumne, $_POST['alumne']);
+    if (!(empty($_POST['contacte']['primer_cognom']))){
+        $contacte = new Contacte();
+        ContacteMapper::map($contacte, $_POST['contacte']);
+    }
     // validate
     //$errors = TodoValidator::validate($alumne);
     // validate
     if (empty($errors)) {
         // save
-        $dao = new AlumneDao();
-        $alumne = $dao->save($alumne);
-        Alert::addAlert(1,'Alumne guardat correctament.');
+        $alumneDao = new AlumneDao();
+        $alumne = $alumneDao->save($alumne);
+        $msg = "Alumne";
+        if ($contacte != null){
+            $contacteDao = new ContacteDao();
+            $contacte = $contacteDao->save($contacte);
+            $msg .= " i contacte";
+            //if it's a new record, add the relationship
+            if (!($edit)){
+                $alumneContacte = new AlumneContacte();
+                $alumneContacte->setIdAlumne($alumne->getId());
+                $alumneContacte->setIdContacte($contacte->getId());
+                $alumneContacte->setRelacio($_POST['contacte']['relacio']);
+                $alumneContacte->setRelacioAltres($_POST['contacte']['relacio_altres']);
+                $acDAO = new AlumneContacteDao();
+                $alumneContacte = $acDAO->save($alumneContacte);
+            }
+        }
+        Alert::addAlert(1,$msg." guardat correctament.");
         // redirect
         if (isset($alumne)){
             Utils::redirect('alumnesEdit', ['id' => $alumne->getId()]);

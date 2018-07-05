@@ -36,6 +36,7 @@ function enableButtons(table, enabled){
 function initDatatables() {
     return $('#alumnes').DataTable({
         language: {"url": "plugins/dataTables/Datatable.Catalan.json"},
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Tots"]],
         processing: true,
         serverSide: true,
         ajax: "?page=alumnesList",
@@ -90,14 +91,8 @@ function initDatatables() {
                         title: "Confirma l'acció",
                         body: "Estàs segur que vols esborrar l'alumne " + nomAlumne + "?",
                         actions: [{
-                            label: 'Cancel·lar',
-                            cssClass: 'btn-success',
-                            onClick: function(e){
-                                $(e.target).parents('.modal').modal('hide');
-                            }
-                        },{
-                            label: 'Esborrar',
-                            cssClass: 'btn-danger',
+                            label: 'Si',
+                            cssClass: 'btn-primary btn-lockwidth',
                             onClick: function(e){
                                 var uri = "?page=alumnesDelete&id=" + data[0];
                                 $(e.target).parents('.modal').modal('hide');
@@ -111,6 +106,12 @@ function initDatatables() {
                                   .always(function() {
                                     $(e.target).parents('.modal').modal('hide');
                                   });
+                            }
+                        },{
+                            label: 'No',
+                            cssClass: 'btn-default btn-lockwidth',
+                            onClick: function(e){
+                                $(e.target).parents('.modal').modal('hide');
                             }
                         }]
                     });

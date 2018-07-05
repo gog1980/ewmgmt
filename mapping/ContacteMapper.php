@@ -19,19 +19,19 @@
 namespace LAMgmt\Mapping;
 
 use \DateTime;
-use \LAMgmt\Model\Alumne;
+use \LAMgmt\Model\Contacte;
 
 /**
- * Mapper for {@link \LAMgmt\Model\Alumne} from array.
- * @see \LAMgmt\Validation\AlumneValidator
+ * Mapper for {@link \LAMgmt\Model\Contacte} from array.
+ * @see \LAMgmt\Validation\ContacteValidator
  */
-final class AlumneMapper {
+final class ContacteMapper {
 
     private function __construct() {
     }
 
     /**
-     * Maps array to the given {@link Alumne}.
+     * Maps array to the given {@link Contacte}.
      * <p>
      * Expected properties are:
      * <ul>
@@ -49,81 +49,88 @@ final class AlumneMapper {
      *   <li>poblacio</li>
      *   <li>provincia</li>
      *   <li>data_naixement</li>
-     *   <li>data_ingres</li>
      *   <li>data_creacio</li>
      *   <li>data_modificacio</li>
      *   <li>esborrat</li>
+     *   <li>relacio</li>
+     *   <li>relacio_altres</li>
      * </ul>
-     * @param Todo $alumne
+     * @param Contacte $contacte
      * @param array $properties
      */
-    public static function map(Alumne $alumne, array $properties) {
+    public static function map(Contacte $contacte, array $properties) {
         if (array_key_exists('id', $properties)) {
-            $alumne->setId($properties['id']);
+            $contacte->setId($properties['id']);
         }
         if (array_key_exists('nif', $properties)) {
-            $alumne->setNif($properties['nif']);
+            $contacte->setNif($properties['nif']);
         }
         if (array_key_exists('nom', $properties)) {
-            $alumne->setNom($properties['nom']);
+            $contacte->setNom($properties['nom']);
         }
         if (array_key_exists('primer_cognom', $properties)) {
-            $alumne->setPrimerCognom($properties['primer_cognom']);
+            $contacte->setPrimerCognom($properties['primer_cognom']);
         }
         if (array_key_exists('segon_cognom', $properties)) {
-            $alumne->setSegonCognom($properties['segon_cognom']);
+            $contacte->setSegonCognom($properties['segon_cognom']);
         }
         if (array_key_exists('sexe', $properties)) {
-            $alumne->setSexe($properties['sexe']);
+            $contacte->setSexe($properties['sexe']);
         }
         if (array_key_exists('mobil', $properties)) {
-            $alumne->setMobil($properties['mobil']);
+            $contacte->setMobil($properties['mobil']);
         }
         if (array_key_exists('telefon', $properties)) {
-            $alumne->setTelefon($properties['telefon']);
+            $contacte->setTelefon($properties['telefon']);
         }
         if (array_key_exists('email', $properties)) {
-            $alumne->setEmail($properties['email']);
+            $contacte->setEmail($properties['email']);
         }
         if (array_key_exists('adreça', $properties)) {
-            $alumne->setAdreça($properties['adreça']);
+            $contacte->setAdreça($properties['adreça']);
         }
         if (array_key_exists('codi_postal', $properties)) {
-            $alumne->setCodiPostal($properties['codi_postal']);
+            $contacte->setCodiPostal($properties['codi_postal']);
         }
         if (array_key_exists('poblacio', $properties)) {
-            $alumne->setPoblacio($properties['poblacio']);
+            $contacte->setPoblacio($properties['poblacio']);
         }
         if (array_key_exists('provincia', $properties)) {
-            $alumne->setProvincia($properties['provincia']);
+            $contacte->setProvincia($properties['provincia']);
         }
         if (array_key_exists('data_naixement', $properties)) {
             $value = self::createDateTime($properties['data_naixement']);
             if ($value) {
-                $alumne->setDataNaixement($value);
+                $contacte->setDataNaixement($value);
             }
         }
-        if (array_key_exists('data_ingres', $properties)) {
-            $value = self::createDateTime($properties['data_ingres']);
-            if ($value) {
-                $alumne->setDataIngres($value);
-            }
-        }        
         if (array_key_exists('data_creacio', $properties)) {
             $value = self::createDateTime($properties['data_creacio']);
             if ($value) {
-                $alumne->setDataCreacio($value);
+                $contacte->setDataCreacio($value);
             }
         }
         if (array_key_exists('data_modificacio', $properties)) {
             $value = self::createDateTime($properties['data_modificacio']);
             if ($value) {
-                $alumne->setDataModificacio($value);
+                $contacte->setDataModificacio($value);
             }
         }
         if (array_key_exists('esborrat', $properties)) {
-            $alumne->setEsborrat($properties['esborrat']);
+            $contacte->setEsborrat($properties['esborrat']);
         }
+        
+        /* Alumnes_Contactes properties. Used for agility purposes. */
+        
+        if (array_key_exists('relacio', $properties)) {
+            $contacte->setRelacio($properties['relacio']);
+        }
+        
+        if (array_key_exists('relacio_altres', $properties)) {
+            $contacte->setRelacioAltres($properties['relacio_altres']);
+        }
+        
+        
     }
 
     private static function createDateTime($input) {
@@ -139,7 +146,7 @@ final class AlumneMapper {
     }
     
     /**
-     * Maps the given {@link Alumne} to the given array.
+     * Maps the given {@link Contacte} to the given array.
      * <p>
      * Expected returned values in array are:
      * <ul>
@@ -157,33 +164,37 @@ final class AlumneMapper {
      *   <li>poblacio</li>
      *   <li>provincia</li>
      *   <li>data_naixement</li>
-     *   <li>data_ingres</li>
      *   <li>data_creacio</li>
      *   <li>data_modificacio</li>
      *   <li>esborrat</li>
+     *   <li>relacio</li>
+     *   <li>relacio_altres</li>
      * </ul>
      * @param array $arrDest
-     * @param Alumne $alumne
+     * @param Contacte $contacte
      */
-    public static function mapToArray(array &$arrDest, Alumne $alumne) {    
-        $arrDest['id'] = $alumne->getId();
-        $arrDest['nif'] = $alumne->getNif();
-        $arrDest['nom'] = $alumne->getNom();
-        $arrDest['primer_cognom'] = $alumne->getPrimerCognom();
-        $arrDest['segon_cognom'] = $alumne->getSegonCognom();
-        $arrDest['sexe'] = $alumne->getSexe();
-        $arrDest['mobil'] = $alumne->getMobil();
-        $arrDest['telefon'] = $alumne->getTelefon();
-        $arrDest['email'] = $alumne->getEmail();
-        $arrDest['adreça'] = $alumne->getAdreça();
-        $arrDest['codi_postal'] = $alumne->getCodiPostal();
-        $arrDest['poblacio'] = $alumne->getPoblacio();
-        $arrDest['provincia'] = $alumne->getProvincia();
-        $arrDest['data_naixement'] = self::getDate($alumne->getDataNaixement());
-        $arrDest['data_ingres'] = self::getDate($alumne->getDataIngres()); //$alumne->getDataIngres()->format('d/m/Y');
-        $arrDest['data_creacio'] = self::getDate($alumne->getDataCreacio());
-        $arrDest['data_modificacio'] = self::getDate($alumne->getDataModificacio());
-        $arrDest['esborrat'] = $alumne->getEsborrat();
+    public static function mapToArray(array &$arrDest, Contacte $contacte) {    
+        $arrDest['id'] = $contacte->getId();
+        $arrDest['nif'] = $contacte->getNif();
+        $arrDest['nom'] = $contacte->getNom();
+        $arrDest['primer_cognom'] = $contacte->getPrimerCognom();
+        $arrDest['segon_cognom'] = $contacte->getSegonCognom();
+        $arrDest['sexe'] = $contacte->getSexe();
+        $arrDest['mobil'] = $contacte->getMobil();
+        $arrDest['telefon'] = $contacte->getTelefon();
+        $arrDest['email'] = $contacte->getEmail();
+        $arrDest['adreça'] = $contacte->getAdreça();
+        $arrDest['codi_postal'] = $contacte->getCodiPostal();
+        $arrDest['poblacio'] = $contacte->getPoblacio();
+        $arrDest['provincia'] = $contacte->getProvincia();
+        $arrDest['data_naixement'] = self::getDate($contacte->getDataNaixement());
+        $arrDest['data_creacio'] = self::getDate($contacte->getDataCreacio());
+        $arrDest['data_modificacio'] = self::getDate($contacte->getDataModificacio());
+        $arrDest['esborrat'] = $contacte->getEsborrat();
+        
+        /* Alumnes_Contactes properties. Used for agility purposes. */
+        $arrDest['relacio'] = $contacte->getRelacio();
+        $arrDest['relacio_altres'] = $contacte->getRelacioAltres();
     }
     
     private static function getDate($value)
@@ -193,5 +204,5 @@ final class AlumneMapper {
         } else {
             return "";
         }
-    }
+    }    
 }

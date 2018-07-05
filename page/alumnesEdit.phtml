@@ -47,31 +47,75 @@
                     </div><!-- /.box -->
                 </div><!-- /.col-md-6 -->
                 <div class="col-md-6">
-                    <!-- Default box -->
+                    <!-- Contactes box -->
+                    <?php /*$contactesAlumneValues[0]*/ ?>
                     <div class="box box-warning">
                         <div class="box-header with-border">
                             <h3 class="box-title">Contactes</h3>
                         </div><!-- /.box-header -->
+                        <?php echo \LAMgmt\Util\Utils::getContacteTabsIfNecessary($contactesAlumneValues); ?>
                         <div class="box-body">
+                            <?php 
+                                $items = count($contactesAlumneValues);
+                                if ($items == 0) { 
+                                    $items = 1; 
+                                } else {
+                                    if ($items > 1) {
+                                        echo '<div class="tab-content">';
+                                    }
+                                }
+                                $i = 0;
+                                $first = true;
+                                while ($i < $items) {
+                                    if (count($contactesAlumneValues) > 1) {
+                                        if ($first == true) {
+                                            echo '<div id="cte' . $contactesAlumneValues[$i]['id'] . '" class="tab-pane fade in active">';
+                                            $first = false;
+                                        } else {
+                                            echo '<div id="cte' . $contactesAlumneValues[$i]['id'] . '" class="tab-pane fade in">';
+                                        }
+                                    }
+                                    $relacio = "";
+                                    if (count($contactesAlumneValues) > 0) {
+                                        $relacio = $contactesAlumneValues[$i]['relacio'];
+                                        $relacioAltres = $contactesAlumneValues[$i]['relacio_altres'];
+                                    }
+                            ?>
                             <label>Relació amb l'alumne</label>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6 noPaddingRight">
-                                        <select class="form-control" name="relacio" id="relacio">
-                                            <option value="P">Pare</option>
-                                            <option value="M">Mare</option>
-                                            <option value="G">Germà</option>
-                                            <option value="I">Avi</option>
-                                            <option value="A">Àvia</option>
-                                            <option value="L">Altres</option>
+                                        <select class="form-control" name="contacte[relacio]" id="relacio">
+                                            <option <?php echo ($relacio == "P" ? "selected" : "") ?> value="P">Pare</option>
+                                            <option <?php echo ($relacio == "M" ? "selected" : "") ?> value="M">Mare</option>
+                                            <option <?php echo ($relacio == "G" ? "selected" : "") ?> value="G">Germà</option>
+                                            <option <?php echo ($relacio == "I" ? "selected" : "") ?> value="I">Avi</option>
+                                            <option <?php echo ($relacio == "A" ? "selected" : "") ?> value="A">Àvia</option>
+                                            <option <?php echo ($relacio == "L" ? "selected" : "") ?> value="L">Altres</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 padLeft5">
-                                        <input id="relacio_altres" name="relacio_altres" type="text" class="form-control" placeholder="Altre relació" disabled>
+                                        <input <?php echo "value='$relacioAltres'" ?> id="relacio_altres" name="contacte[relacio_altres]" type="text" class="form-control" placeholder="Altre relació" <?php echo ($relacioAltres != "") ? "" : "disabled" ?>>
                                     </div>
                                 </div>
                             </div>                    
-                            <?php echo \LAMgmt\Util\Utils::getPersonalDataForm("contacte",null,false); ?>
+                            <?php 
+                                    if (count($contactesAlumneValues) > 0) {
+                                        echo \LAMgmt\Util\Utils::getPersonalDataForm("contacte",$contactesAlumneValues[$i],false);
+                                    } else {
+                                        echo \LAMgmt\Util\Utils::getPersonalDataForm("contacte",null,false);
+                                    }
+                                    $i++;
+                                    /* close <div id="xxx" class="tab-pane fade in"> */
+                                    if (count($contactesAlumneValues) > 1) {
+                                        echo "</div>";
+                                    }
+                                }
+                                /* close <div class="tab-content"> */
+                                if (count($contactesAlumneValues) > 1) {
+                                    echo "</div>";
+                                }
+                            ?>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
                 </div><!-- /.col-md-6 -->            

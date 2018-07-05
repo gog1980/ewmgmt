@@ -52,14 +52,22 @@ final class AlumneDataTable{
                 'db'        => 'data_naixement',
                 'dt'        => 7,
                 'formatter' => function( $d, $row ) {
-                    return date( 'd/m/Y', strtotime($d));
+                    if ($d) {
+                        return date( 'd/m/Y', strtotime($d));
+                    } else{
+                        return "";
+                    }
                 }
             ),
             array(
                 'db'        => 'data_ingres',
                 'dt'        => 8,
                 'formatter' => function( $d, $row ) {
-                    return date( 'd/m/Y', strtotime($d));
+                    if ($d) {
+                        return date( 'd/m/Y', strtotime($d));
+                    } else{
+                        return "";
+                    }
                 }
             )                    
         );

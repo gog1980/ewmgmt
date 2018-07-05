@@ -19,6 +19,7 @@ namespace LAMgmt\Util;
 
 use LAMgmt\Exception\NotFoundException;
 use LAMgmt\Dao\AlumneDao;
+use LAMgmt\Dao\ContacteDao;
 use LAMgmt\Util\Utils;
 
 /**
@@ -51,4 +52,24 @@ final class UtilsAlumne {
         }
         return $alumne;
     } 
+    
+    /**
+     * Get {@link Contacte} related to {@link Alumne} by the {@link Alumne} identifier 'id' found in the URL.
+     * @return Contacte Array of Contacte related to the Alumne
+     * @throws NotFoundException if the param is not found
+     */
+    public static function getContactesAlumneByGetId() {
+        $id = null;
+        try {
+            $id = Utils::getUrlParam('id');
+        } catch (Exception $ex) {
+            throw new NotFoundException('No s\'ha indicat identificador d\'alumne .');
+        }
+        if (!is_numeric($id)) {
+            throw new NotFoundException('Identificador d\'alumne invàlid.');
+        }
+        $dao = new ContacteDao();
+        $contactes = $dao->getContacteForAlumneEditByAlumneId($id);
+        return $contactes;
+    }     
 }
