@@ -76,6 +76,7 @@
                                         }
                                     }
                                     $relacio = "";
+                                    $relacioAltres = "";
                                     if (count($contactesAlumneValues) > 0) {
                                         $relacio = $contactesAlumneValues[$i]['relacio'];
                                         $relacioAltres = $contactesAlumneValues[$i]['relacio_altres'];
@@ -95,7 +96,6 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6 padLeft5">
-                                        
                                         <input <?php echo "value='$relacioAltres'" ?> id="relacio_altres" name="contacte[relacio_altres]" type="text" class="form-control" placeholder="Altre relació" <?php echo ($relacioAltres != "") ? "" : "disabled" ?>>
                                     </div>
                                 </div>

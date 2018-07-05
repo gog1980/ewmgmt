@@ -102,7 +102,7 @@ final class AlumneContacte {
      * @return string
      */
     public function getRelacio() {
-        return $this->relacio;
+        return ($this->relacio == null) ? "" : $this->relacio;
     }
 
     public function setRelacio($value) {
@@ -113,7 +113,7 @@ final class AlumneContacte {
      * @return string
      */
     public function getRelacioAltres() {
-        return $this->relacio_altres;
+        return ($this->relacio_altres == null) ? "" : $this->relacio_altres;
     }
 
     public function setRelacioAltres($value) {
